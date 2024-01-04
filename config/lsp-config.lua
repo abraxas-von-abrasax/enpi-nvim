@@ -109,7 +109,7 @@ cmp.setup({
         end, { "i", "s" }),
 
         -- select the current item with enter
-        ["<cr>"] = cmp.mapping.confirm({ select = true }),
+        ["<c-l>"] = cmp.mapping.confirm({ select = true }),
 
         -- ctrl+space to trigger completion menu
         [get_toggle_completion_key()] = cmp_action.toggle_completion(),
