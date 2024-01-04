@@ -72,6 +72,16 @@ luasnip_loader.lazy_load()
 
 _G.vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
+local get_toggle_completion_key = function()
+    if _G.vim.fn.has("mac") == 1 then
+        -- Use ctrl+k on mac
+        return "<c-k>"
+    else
+        -- Use ctrl+space on linux or windows
+        return "<c-space>"
+    end
+end
+
 cmp.setup({
     formatting = cmp_format,
     preselect = "item",
@@ -89,20 +99,20 @@ cmp.setup({
         { name = "luasnip", keyword_length = 2 },
     },
     mapping = cmp.mapping.preset.insert({
-        -- confirm completion item
+        -- autocomplete copilot suggestion with tab
         ["<tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.mapping.confirm({ select = true })
-            elseif copilot_suggestion.is_visible() then
+            if copilot_suggestion.is_visible() then
                 copilot_suggestion.accept()
             else
                 fallback()
             end
         end, { "i", "s" }),
-        -- ["<tab>"] = cmp.mapping.confirm({ select = true }),
+
+        -- select the current item with enter
+        ["<cr>"] = cmp.mapping.confirm({ select = true }),
 
         -- ctrl+space to trigger completion menu
-        ["<c-space>"] = cmp_action.toggle_completion(),
+        [get_toggle_completion_key()] = cmp_action.toggle_completion(),
 
         -- tab complete
         ["<s-tab>"] = cmp.mapping.select_prev_item(),

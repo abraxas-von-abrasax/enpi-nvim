@@ -4,6 +4,20 @@ if not status_ok then
     return
 end
 
+-- LSP clients attached to buffer
+local attached_lsp_clients = function()
+    local bufnr = _G.vim.api.nvim_get_current_buf()
+    local clients = _G.vim.lsp.buf_get_clients(bufnr)
+
+    local client_names = {}
+
+    for _, client in pairs(clients) do
+        table.insert(client_names, client.name)
+    end
+
+    return "\u{f085} " .. table.concat(client_names, " | ")
+end
+
 lualine.setup({
     options = {
         icons_enabled = true,
@@ -20,7 +34,7 @@ lualine.setup({
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff", "diagnostics" },
         lualine_c = { "filename", require("pomodoro").statusline },
-        lualine_x = { "encoding", "fileformat", "filetype" },
+        lualine_x = { attached_lsp_clients, "encoding", "fileformat", "filetype" },
         lualine_y = { "progress" },
         lualine_z = { "location" }
     },
