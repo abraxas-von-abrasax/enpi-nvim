@@ -83,6 +83,18 @@ local opts = {
 }
 
 local mappings = {
+    b = {
+        name = "Buffer Tabs",
+        c = { "<cmd>BufferClose<cr>", "Close Buffer" },
+        m = {
+            name = "Move",
+            n = { "<cmd>BufferMoveNext<cr>", "Move Right" },
+            p = { "<cmd>BufferMovePrevious<cr>", "Move Left" },
+        },
+        n = { "<cmd>BufferNext<cr>", "Next Buffer" },
+        p = { "<cmd>BufferPrevious<cr>", "Previous Buffer" },
+        r = { "<cmd>BufferRestore<cr>", "Close Buffer!" },
+    },
     k = { "<cmd>bdelete<cr>", "Kill Buffer" }, -- Close current file
     w = { "<cmd>w!<cr>", "Save" },             -- Save current file
     q = { "<cmd>wqall!<cr>", "Quit" },         -- Quit Neovim after saving the file
@@ -138,6 +150,7 @@ local mappings = {
         l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
         r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
         s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
+        t = { "<cmd>TroubleToggle<cr>", "Trouble" },
         S = {
             "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
             "Workspace Symbols"
